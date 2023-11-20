@@ -1,0 +1,63 @@
+All analysis codes of the present study using Mplus 8.3 software running, genuine software please through official licensed sources: http://www.statmodel.com/.
+
+Analysis Code Example of Identification of Latent Profiles
+TITLE: Identify the optimal classification for LPA
+DATA: file is *****.csv;
+VARIABLE: names are id sex age jy jyn zy hkbc1-hkbc10 fz z1 z2 z3;
+USEVARIABLES ARE z1 z2 z3;
+USEOBSER ARE (fz EQ 1);
+MISSING = all(99999);
+CLASSES = c(2); !Set the profile solution by changing the number
+ANALYSIS: type=mixture;
+STARTS = 2000 500;
+OUTPUT: TECH11 TECH14;
+SAVEDATA: file=*********.txt;
+SAVE = cprob;
+PLOT: type is plot3;
+SERIES = z1 z2 z3(*);
+
+Analysis Code Example of the R3-step Process for LPA
+TITLE: Evaluate the effects of demographic predictors on class membership
+DATA: file is *****.csv;
+VARIABLE: names are id sex age jy jyn zy hkbc1-hkbc10 fz z1 z2 z3;
+USEVARIABLES ARE sex age jy jyn zy z1 z2 z3;
+USEOBSER ARE (fz EQ 1);
+MISSING = all(99999);
+CLASSES = c(3); !Set the profile solution by changing the number
+AUXILIARY = sex (R3STEP)
+            jy (R3STEP)
+            jyn (R3STEP)
+            zy (R3STEP);
+ANALYSIS: type=mixture;
+STARTS = 2000 500;
+OUTPUT: TECH11 TECH14;
+SAVEDATA: file=*********.txt;
+SAVE = cprob;
+PLOT: type is plot3;
+SERIES = z1 z2 z3(*);
+
+Analysis Code Example of the BCH Auxiliary (BCH) Function for LPA
+TITLE: Evaluate the comparisons of cognitive functioning across profiles
+DATA: file is *****.csv;
+VARIABLE: names are id sex age jy jyn zy hkbc1-hkbc10 fz z1 z2 z3;
+USEVARIABLES ARE z1 z2 z3 hkbc1-hkbc10;
+USEOBSER ARE (fz EQ 1);
+MISSING = all(99999);
+CLASSES = c(3); !Set the profile solution by changing the number
+AUXILIARY = hkbc1(BCH)
+            hkbc2(BCH)
+            hkbc3(BCH)
+            hkbc4(BCH)
+            hkbc5(BCH)
+            hkbc6(BCH)
+            hkbc7(BCH)
+            hkbc8(BCH)
+            hkbc9(BCH)
+            hkbc10(BCH;
+ANALYSIS: type=mixture;
+STARTS = 2000 500;
+OUTPUT: TECH11 TECH14;
+SAVEDATA: file=*********.txt;
+SAVE = cprob;
+PLOT: type is plot3;
+SERIES = z1 z2 z3(*);
